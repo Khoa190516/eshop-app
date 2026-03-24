@@ -8,7 +8,7 @@ interface SortControlsProps {
 export default function SortControls({ sortBy, onSortChange }: SortControlsProps) {
   return (
     <div className="flex items-center gap-4 mb-6">
-      <span className="text-sm font-medium text-gray-700">Sort by:</span>
+      <span className="text-sm font-medium text-gray-900">Sort by:</span>
       <select
         value={sortBy}
         onChange={(e) => onSortChange(e.target.value as 'price-asc' | 'price-desc' | '')}
