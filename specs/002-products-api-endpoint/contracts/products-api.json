@@ -1,0 +1,113 @@
+# API Contract: Products Endpoint
+
+**Feature**: Products API Endpoint  
+**Date**: March 24, 2026  
+**Version**: 1.0.0
+
+## Overview
+
+This contract defines the interface for the `/api/products` endpoint that provides access to the product catalog.
+
+## Endpoint
+
+### GET /api/products
+
+Retrieves all available products in the catalog.
+
+**Method**: GET  
+**Path**: /api/products  
+**Authentication**: None (public endpoint)  
+**Rate Limiting**: None initially  
+
+#### Request
+
+**Headers**: None required  
+
+**Query Parameters**: None  
+
+**Body**: None  
+
+#### Response
+
+**Success Response (200 OK)**:
+
+```json
+{
+  "data": [
+    {
+      "title": "string",
+      "type": "string",
+      "branch": "string",
+      "price": "number",
+      "year": "number",
+      "imageUrl": "string",
+      "description": "string"
+    }
+  ]
+}
+```
+
+**Content-Type**: application/json  
+**Status Code**: 200  
+
+**Error Responses**:
+
+**500 Internal Server Error**:
+```json
+{
+  "error": "Internal server error",
+  "message": "An unexpected error occurred while fetching products"
+}
+```
+
+**Content-Type**: application/json  
+**Status Code**: 500  
+
+#### Response Schema
+
+**Product Object**:
+- `title` (string, required): Product name
+- `type` (string, required): Product category
+- `branch` (string, required): Manufacturer/brand
+- `price` (number, required): Price in USD
+- `year` (number, required): Release year
+- `imageUrl` (string, required): Image URL
+- `description` (string, required): Product description
+
+#### Example Response
+
+```json
+{
+  "data": [
+    {
+      "title": "iPhone 15 Pro",
+      "type": "phone",
+      "branch": "Apple",
+      "price": 999,
+      "year": 2023,
+      "imageUrl": "/images/iphone15.jpg",
+      "description": "Latest iPhone with advanced camera system and A17 Pro chip."
+    },
+    {
+      "title": "MacBook Pro 16\"",
+      "type": "laptop",
+      "branch": "Apple",
+      "price": 2499,
+      "year": 2023,
+      "imageUrl": "/images/macbook.jpg",
+      "description": "Powerful laptop for professionals with M3 chip."
+    }
+  ]
+}
+```
+
+## Contract Guarantees
+
+1. **Data Consistency**: Response structure will remain stable for the lifetime of this version
+2. **Performance**: Response time < 1 second under normal load
+3. **Availability**: Endpoint will be available during application runtime
+4. **Data Validity**: All products will conform to the defined schema
+
+## Version History
+
+- **v1.0.0**: Initial implementation with hardcoded product data

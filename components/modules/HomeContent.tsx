@@ -3,7 +3,6 @@
 import ProductList from '@/components/modules/ProductList';
 import FilterSidebar from '@/components/modules/FilterSidebar';
 import SortControls from '@/components/modules/SortControls';
-import { products as initialProducts } from '@/lib/data/products';
 import { useProducts } from '@/hooks/useProducts';
 
 export default function HomeContent() {
@@ -19,7 +18,7 @@ export default function HomeContent() {
     setSelectedBranches,
     sortBy,
     setSortBy,
-  } = useProducts(initialProducts);
+  } = useProducts();
 
   return (
     <div className="flex gap-8">
