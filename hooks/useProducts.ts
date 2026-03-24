@@ -1,16 +1,38 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Product, ProductType } from '@/types';
 
-export function useProducts(initialProducts: Product[]) {
+export function useProducts() {
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedTypes, setSelectedTypes] = useState<ProductType[]>([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
   const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | ''>('');
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setAllProducts(data.data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = initialProducts;
+    let filtered = allProducts;
 
     // Filter by type
     if (selectedTypes.length > 0) {
@@ -35,12 +57,12 @@ export function useProducts(initialProducts: Product[]) {
     }
 
     return filtered;
-  }, [initialProducts, selectedTypes, priceRange, selectedBranches, sortBy]);
+  }, [allProducts, selectedTypes, priceRange, selectedBranches, sortBy]);
 
   return {
     products: filteredAndSortedProducts,
-    isLoading: false,
-    error: null,
+    isLoading: loading,
+    error,
     selectedTypes,
     setSelectedTypes,
     priceRange,
