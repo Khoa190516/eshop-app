@@ -38,11 +38,11 @@ export default function FilterSidebar({
 
   return (
     <aside className="w-64 bg-white p-6 rounded-lg shadow-sm" role="region" aria-labelledby="filters-heading">
-      <h3 id="filters-heading" className="text-lg font-semibold mb-4">Filters</h3>
+      <h3 id="filters-heading" className="text-lg font-semibold text-gray-900 mb-4">Filters</h3>
 
       {/* Category Filter */}
       <div className="mb-6">
-        <h4 className="font-medium mb-2">Product Category</h4>
+        <h4 className="font-medium text-gray-800 mb-2">Product Category</h4>
         <div className="space-y-2" role="group" aria-labelledby="category-filter-heading">
           <span id="category-filter-heading" className="sr-only">Select product categories to filter by</span>
           {categories.map(category => (
@@ -54,7 +54,7 @@ export default function FilterSidebar({
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 aria-describedby={`category-${category}-description`}
               />
-              <span className="ml-2 text-sm capitalize" id={`category-${category}-description`}>{category}</span>
+              <span className="ml-2 text-sm capitalize text-gray-700" id={`category-${category}-description`}>{category}</span>
             </label>
           ))}
         </div>
@@ -62,7 +62,7 @@ export default function FilterSidebar({
 
       {/* Price Filter */}
       <div className="mb-6">
-        <h4 className="font-medium mb-2">Price Range</h4>
+        <h4 className="font-medium text-gray-800 mb-2">Price Range</h4>
         <div className="space-y-2" role="group" aria-labelledby="price-filter-heading">
           <span id="price-filter-heading" className="sr-only">Set price range to filter products</span>
           <div>
@@ -96,7 +96,7 @@ export default function FilterSidebar({
 
       {/* Brand Filter */}
       <div className="mb-6">
-        <h4 className="font-medium mb-2">Brand</h4>
+        <h4 className="font-medium text-gray-800 mb-2">Brand</h4>
         <div className="space-y-2" role="group" aria-labelledby="brand-filter-heading">
           <span id="brand-filter-heading" className="sr-only">Select brands to filter by</span>
           {brands.map(brand => (
@@ -108,7 +108,7 @@ export default function FilterSidebar({
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 aria-describedby={`brand-${brand}-description`}
               />
-              <span className="ml-2 text-sm" id={`brand-${brand}-description`}>{brand}</span>
+              <span className="ml-2 text-sm text-gray-700" id={`brand-${brand}-description`}>{brand}</span>
             </label>
           ))}
         </div>

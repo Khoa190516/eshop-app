@@ -177,7 +177,64 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
 
-10. **Check for extension hooks**: After completion validation, check if `.specify/extensions.yml` exists in the project root.
+10. **Auto-commit and push feature branch**:
+    After all tasks are marked complete and completion validation passes:
+
+    a. **Verify git status**: Run `git status` to confirm which files are changed. If there are no changes (already committed), skip to step 11.
+
+    b. **Stage all changes**: Run `git add -A`
+
+    c. **Build commit message**:
+       - Extract the spec number from the FEATURE_DIR folder name (e.g., `004` from `004-improve-filter-sort-colors`)
+       - Extract the feature title from spec.md or plan.md (H1 heading)
+       - Format: `feat(spec-{id}): {feature-title}`
+       - Example: `feat(spec-004): Improve filter and sort component styling`
+
+    d. **Commit**: Run `git commit -m "{commit-message}"`
+
+    e. **Push to remote**:
+       - Check if a remote named `origin` exists: `git remote -v`
+       - If remote exists: `git push -u origin {branch-name}`
+       - If push succeeds, proceed to step 11
+       - If push fails (no remote, auth error, etc.), report the error clearly and skip step 11, instructing the user to push manually with `git push -u origin {branch-name}` and then create the PR
+
+11. **Create pull request**:
+    After successfully pushing the feature branch to remote:
+
+    a. **Build PR title**:
+       - Extract the zero-padded spec number from the branch name (e.g., `004` from `004-improve-filter-sort-colors`)
+       - Extract the human-readable feature title from spec.md or plan.md (the H1 or feature name heading)
+       - Format: `{spec-number} - {feature-title}`
+       - Example: `004 - Improve Filter and Sort Component Styling`
+
+    b. **Build PR body**:
+       - Read spec.md for the feature overview (first paragraph or objective section)
+       - Run `git diff origin/master...HEAD --name-only` to get the list of changed files
+       - Read tasks.md and collect all completed tasks (lines matching `- [x]` or `- [X]`)
+       - Format the body as:
+         ```
+         ## Summary
+         {1-2 sentence description of the feature from spec.md}
+
+         ## Changes
+         {bullet list of modified files with brief description of what changed in each}
+
+         ## Tasks Completed
+         {numbered list of all completed task descriptions from tasks.md}
+         ```
+
+    c. **Create PR using GitHub CLI** (try first):
+       Run: `gh pr create --title "{title}" --body "{body}" --base master --head {branch-name}`
+       If the command succeeds, report the PR URL.
+
+    d. **If GitHub CLI is not available**, use MCP GitHub tools:
+       - Load the tool via tool_search_tool_regex with pattern `pull_request.*create|create.*pull_request`
+       - Use the found tool to create the PR with the title and body from steps (a) and (b) above targeting `master` as the base branch
+       - Report the PR URL upon successful creation
+
+    e. **If both methods fail**, output the PR title and body to the user so they can create it manually.
+
+12. **Check for extension hooks**: After completion validation, check if `.specify/extensions.yml` exists in the project root.
     - If it exists, read it and look for entries under the `hooks.after_implement` key
     - If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
     - Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.

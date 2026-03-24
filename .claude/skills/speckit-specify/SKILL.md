@@ -91,6 +91,15 @@ Given that feature description, do this:
    - The JSON output will contain BRANCH_NAME and SPEC_FILE paths
    - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot")
 
+   **Script unavailable fallback** (use when bash script fails or is not available, e.g. Windows without Git Bash/WSL):
+   - Scan `specs/` directory for existing numbered feature folders to determine the next sequential number (e.g., if `001-`, `002-`, `003-`, `004-` exist, next is `005`). Zero-pad to 3 digits.
+   - Compose branch name: `{number}-{short-name}` (e.g., `005-user-auth`)
+   - Run: `git checkout -b {branch-name}` from the repo root
+   - Set BRANCH_NAME to `{branch-name}`
+   - Set FEATURE_DIR to `specs/{branch-name}/` (absolute path)
+   - Create the directory: `mkdir -p specs/{branch-name}/checklists` (or equivalent for the OS)
+   - Set SPEC_FILE to `specs/{branch-name}/spec.md`
+
 3. Load `.specify/templates/spec-template.md` to understand required sections.
 
 4. Follow this execution flow:
