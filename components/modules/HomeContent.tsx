@@ -10,12 +10,12 @@ export default function HomeContent() {
     products,
     isLoading,
     error,
-    selectedTypes,
-    setSelectedTypes,
+    selectedCategories,
+    setSelectedCategories,
     priceRange,
     setPriceRange,
-    selectedBranches,
-    setSelectedBranches,
+    selectedBrands,
+    setSelectedBrands,
     sortBy,
     setSortBy,
   } = useProducts();
@@ -23,12 +23,12 @@ export default function HomeContent() {
   return (
     <div className="flex gap-8">
       <FilterSidebar
-        selectedTypes={selectedTypes}
-        onTypeChange={setSelectedTypes}
+        selectedCategories={selectedCategories}
+        onCategoryChange={setSelectedCategories}
         priceRange={priceRange}
         onPriceChange={setPriceRange}
-        selectedBranches={selectedBranches}
-        onBranchChange={setSelectedBranches}
+        selectedBrands={selectedBrands}
+        onBrandChange={setSelectedBrands}
       />
       <div className="flex-1">
         <SortControls sortBy={sortBy} onSortChange={setSortBy} />
