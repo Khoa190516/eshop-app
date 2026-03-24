@@ -1,15 +1,15 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { Product, ProductType } from '@/types';
+import { Product } from '@/types';
 
 export function useProducts() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = useState<ProductType[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
-  const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | ''>('');
 
   useEffect(() => {
@@ -34,9 +34,9 @@ export function useProducts() {
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = allProducts;
 
-    // Filter by type
-    if (selectedTypes.length > 0) {
-      filtered = filtered.filter(product => selectedTypes.includes(product.type));
+    // Filter by category
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter(product => selectedCategories.includes(product.category));
     }
 
     // Filter by price
@@ -44,9 +44,9 @@ export function useProducts() {
       product.price >= priceRange.min && product.price <= priceRange.max
     );
 
-    // Filter by branch
-    if (selectedBranches.length > 0) {
-      filtered = filtered.filter(product => selectedBranches.includes(product.branch));
+    // Filter by brand
+    if (selectedBrands.length > 0) {
+      filtered = filtered.filter(product => selectedBrands.includes(product.brand));
     }
 
     // Sort
@@ -57,18 +57,18 @@ export function useProducts() {
     }
 
     return filtered;
-  }, [allProducts, selectedTypes, priceRange, selectedBranches, sortBy]);
+  }, [allProducts, selectedCategories, priceRange, selectedBrands, sortBy]);
 
   return {
     products: filteredAndSortedProducts,
     isLoading: loading,
     error,
-    selectedTypes,
-    setSelectedTypes,
+    selectedCategories,
+    setSelectedCategories,
     priceRange,
     setPriceRange,
-    selectedBranches,
-    setSelectedBranches,
+    selectedBrands,
+    setSelectedBrands,
     sortBy,
     setSortBy,
   };

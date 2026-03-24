@@ -1,40 +1,38 @@
 'use client';
 
-import { ProductType } from '@/types';
-
 interface FilterSidebarProps {
-  selectedTypes: ProductType[];
-  onTypeChange: (types: ProductType[]) => void;
+  selectedCategories: string[];
+  onCategoryChange: (categories: string[]) => void;
   priceRange: { min: number; max: number };
   onPriceChange: (range: { min: number; max: number }) => void;
-  selectedBranches: string[];
-  onBranchChange: (branches: string[]) => void;
+  selectedBrands: string[];
+  onBrandChange: (brands: string[]) => void;
 }
 
 export default function FilterSidebar({
-  selectedTypes,
-  onTypeChange,
+  selectedCategories,
+  onCategoryChange,
   priceRange,
   onPriceChange,
-  selectedBranches,
-  onBranchChange,
+  selectedBrands,
+  onBrandChange,
 }: FilterSidebarProps) {
-  const productTypes: ProductType[] = ['phone', 'laptop', 'mouse', 'keyboard', 'headphone', 'others'];
-  const branches = ['Apple', 'Samsung', 'Logitech', 'Keychron', 'Sony', 'Dell', 'Razer'];
+  const categories = ['beauty', 'fragrances', 'furniture', 'groceries'];
+  const brands = ['Essence', 'Glamour Beauty', 'Velvet Touch', 'Calvin Klein', 'Chanel', 'Dior'];
 
-  const handleTypeChange = (type: ProductType, checked: boolean) => {
+  const handleCategoryChange = (category: string, checked: boolean) => {
     if (checked) {
-      onTypeChange([...selectedTypes, type]);
+      onCategoryChange([...selectedCategories, category]);
     } else {
-      onTypeChange(selectedTypes.filter(t => t !== type));
+      onCategoryChange(selectedCategories.filter(c => c !== category));
     }
   };
 
-  const handleBranchChange = (branch: string, checked: boolean) => {
+  const handleBrandChange = (brand: string, checked: boolean) => {
     if (checked) {
-      onBranchChange([...selectedBranches, branch]);
+      onBrandChange([...selectedBrands, brand]);
     } else {
-      onBranchChange(selectedBranches.filter(b => b !== branch));
+      onBrandChange(selectedBrands.filter(b => b !== brand));
     }
   };
 
@@ -42,21 +40,21 @@ export default function FilterSidebar({
     <aside className="w-64 bg-white p-6 rounded-lg shadow-sm" role="region" aria-labelledby="filters-heading">
       <h3 id="filters-heading" className="text-lg font-semibold mb-4">Filters</h3>
 
-      {/* Type Filter */}
+      {/* Category Filter */}
       <div className="mb-6">
-        <h4 className="font-medium mb-2">Product Type</h4>
-        <div className="space-y-2" role="group" aria-labelledby="type-filter-heading">
-          <span id="type-filter-heading" className="sr-only">Select product types to filter by</span>
-          {productTypes.map(type => (
-            <label key={type} className="flex items-center">
+        <h4 className="font-medium mb-2">Product Category</h4>
+        <div className="space-y-2" role="group" aria-labelledby="category-filter-heading">
+          <span id="category-filter-heading" className="sr-only">Select product categories to filter by</span>
+          {categories.map(category => (
+            <label key={category} className="flex items-center">
               <input
                 type="checkbox"
-                checked={selectedTypes.includes(type)}
-                onChange={(e) => handleTypeChange(type, e.target.checked)}
+                checked={selectedCategories.includes(category)}
+                onChange={(e) => handleCategoryChange(category, e.target.checked)}
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                aria-describedby={`type-${type}-description`}
+                aria-describedby={`category-${category}-description`}
               />
-              <span className="ml-2 text-sm capitalize" id={`type-${type}-description`}>{type}</span>
+              <span className="ml-2 text-sm capitalize" id={`category-${category}-description`}>{category}</span>
             </label>
           ))}
         </div>
@@ -78,7 +76,7 @@ export default function FilterSidebar({
               placeholder="0"
               aria-describedby="min-price-description"
             />
-            <span id="min-price-description" className="sr-only">Minimum price in VND</span>
+            <span id="min-price-description" className="sr-only">Minimum price in USD</span>
           </div>
           <div>
             <label htmlFor="max-price" className="block text-sm">Max Price</label>
@@ -91,26 +89,26 @@ export default function FilterSidebar({
               placeholder="5000"
               aria-describedby="max-price-description"
             />
-            <span id="max-price-description" className="sr-only">Maximum price in VND</span>
+            <span id="max-price-description" className="sr-only">Maximum price in USD</span>
           </div>
         </div>
       </div>
 
-      {/* Branch Filter */}
+      {/* Brand Filter */}
       <div className="mb-6">
         <h4 className="font-medium mb-2">Brand</h4>
         <div className="space-y-2" role="group" aria-labelledby="brand-filter-heading">
           <span id="brand-filter-heading" className="sr-only">Select brands to filter by</span>
-          {branches.map(branch => (
-            <label key={branch} className="flex items-center">
+          {brands.map(brand => (
+            <label key={brand} className="flex items-center">
               <input
                 type="checkbox"
-                checked={selectedBranches.includes(branch)}
-                onChange={(e) => handleBranchChange(branch, e.target.checked)}
+                checked={selectedBrands.includes(brand)}
+                onChange={(e) => handleBrandChange(brand, e.target.checked)}
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                aria-describedby={`brand-${branch}-description`}
+                aria-describedby={`brand-${brand}-description`}
               />
-              <span className="ml-2 text-sm" id={`brand-${branch}-description`}>{branch}</span>
+              <span className="ml-2 text-sm" id={`brand-${brand}-description`}>{brand}</span>
             </label>
           ))}
         </div>
