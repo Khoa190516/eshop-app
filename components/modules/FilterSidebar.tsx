@@ -66,7 +66,7 @@ export default function FilterSidebar({
         <div className="space-y-2" role="group" aria-labelledby="price-filter-heading">
           <span id="price-filter-heading" className="sr-only">Set price range to filter products</span>
           <div>
-            <label htmlFor="min-price" className="block text-sm">Min Price</label>
+            <label htmlFor="min-price" className="block text-sm text-gray-700">Min Price</label>
             <input
               id="min-price"
               type="number"
@@ -79,7 +79,7 @@ export default function FilterSidebar({
             <span id="min-price-description" className="sr-only">Minimum price in USD</span>
           </div>
           <div>
-            <label htmlFor="max-price" className="block text-sm">Max Price</label>
+            <label htmlFor="max-price" className="block text-sm text-gray-700">Max Price</label>
             <input
               id="max-price"
               type="number"
